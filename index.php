@@ -28,9 +28,14 @@ if ($delay > 0) {
  * @param float $startTime
  * @return string
  */
-function getElapsedMicroseconds(float $startTime): string
+function getElapsedMicroseconds(float $startTime): int
 {
-    return number_format(((microtime(true) - $startTime) * 1000), 0);
+    return (int) number_format(
+        ((microtime(true) - $startTime) * 1000),
+        0,
+        '',
+        ''
+    );
 }
 
 $scriptTime = getElapsedMicroseconds($scriptStart);
