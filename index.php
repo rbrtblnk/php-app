@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+$scriptStart = microtime(true);
+
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -9,17 +11,37 @@ $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
 
 $delay = $_GET['delay'] ?? 0;
-$message = '-';
+$apiRequestTime = 0;
 
 if ($delay > 0) {
     $apiClient = new Rbrtblnk\PhpApp\ApiClient($_ENV['API_URL']);
 
     try {
+        $requestStart = microtime(true);
         $response = $apiClient->makeRequest((int)$delay);
-        $message = $response->getBody();
+        $apiRequestTime = getElapsedMicroseconds($requestStart);
     } catch (GuzzleException $e) {
         $message = $e;
     }
 }
+/**
+ * @param float $startTime
+ * @return string
+ */
+function getElapsedMicroseconds(float $startTime): string
+{
+    return number_format(((microtime(true) - $startTime) * 1000), 0);
+}
 
-print $message;
+$scriptTime = getElapsedMicroseconds($scriptStart);
+
+header('Content-Type: application/json');
+
+print json_encode(
+    [
+        $scriptTime,
+        $apiRequestTime,
+    ]
+    ,
+    JSON_THROW_ON_ERROR
+);
