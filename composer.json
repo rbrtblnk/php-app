@@ -1,0 +1,26 @@
+{
+    "name": "rbrtblnk/php-app",
+    "description": "App for benchmarking PHP performance",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.3",
+        "symfony/dotenv": "^5.3"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "license": "propietary",
+    "autoload": {
+        "psr-4": {
+            "Rbrtblnk\\PhpApp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Robert Blank",
+            "email": "robert.blank@reservix.de"
+        }
+    ],
+    "minimum-stability": "stable"
+}
