@@ -8,13 +8,18 @@ use Symfony\Component\Dotenv\Dotenv;
 $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env');
 
-$delay = $_GET['delay'] ?? 10;
+$delay = $_GET['delay'] ?? 0;
+$message = '-';
 
-$apiClient = new Rbrtblnk\PhpApp\ApiClient($_ENV['API_URL']);
+if ($delay > 0) {
+    $apiClient = new Rbrtblnk\PhpApp\ApiClient($_ENV['API_URL']);
 
-try {
-    $response = $apiClient->makeRequest((int)$delay);
-    print $response->getBody();
-} catch (GuzzleException $e) {
-    print $e;
+    try {
+        $response = $apiClient->makeRequest((int)$delay);
+        $message = $response->getBody();
+    } catch (GuzzleException $e) {
+        $message = $e;
+    }
 }
+
+print $message;
