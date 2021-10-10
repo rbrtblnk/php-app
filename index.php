@@ -5,6 +5,7 @@ $scriptStart = microtime(true);
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Exception\GuzzleException;
+use Rbrtblnk\PhpApp\DbClient;
 use Symfony\Component\Dotenv\Dotenv;
 
 $dotenv = new Dotenv();
@@ -25,6 +26,11 @@ if ($delay > 0) {
     }
 }
 
+$requestStart = microtime(true);
+$dbClient = new DbClient();
+$dbClient->getUsers();
+$mysqlRequestTime = getElapsedMicroseconds($requestStart);
+
 function getElapsedMicroseconds(float $startTime): int
 {
     return (int)number_format(
@@ -43,6 +49,7 @@ print json_encode(
     [
         $scriptTime,
         $apiRequestTime,
+        $mysqlRequestTime
     ]
     ,
     JSON_THROW_ON_ERROR
