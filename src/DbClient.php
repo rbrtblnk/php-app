@@ -26,7 +26,7 @@ class DbClient
 
     public function getUsers(): array
     {
-        $query = 'SELECT * FROM user';
+        $query = 'SELECT * FROM user LIMIT 0, 1000';
 
         $result = $this->connection
             ->query($query)
