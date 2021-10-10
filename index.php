@@ -24,14 +24,11 @@ if ($delay > 0) {
         $message = $e;
     }
 }
-/**
- * @param float $startTime
- * @return string
- */
+
 function getElapsedMicroseconds(float $startTime): int
 {
-    return (int) number_format(
-        ((microtime(true) - $startTime) * 1000),
+    return (int)number_format(
+        ((microtime(true) - $startTime) * 1000), // Convert microseconds to seconds
         0,
         '',
         ''
